@@ -1,0 +1,65 @@
+# CLAUDE.md
+
+<!-- Replace all {{PLACEHOLDER}} values with your project details -->
+
+## Quick Reference
+
+```bash
+{{DEV_COMMAND}}        # e.g., npm run dev
+{{BUILD_COMMAND}}      # e.g., npm run build
+{{LINT_COMMAND}}       # e.g., npm run lint
+{{TEST_COMMAND}}       # e.g., npm test
+```
+
+## Critical Rules
+
+1. **Read before Edit**: Always read file before modifying
+2. **No `any`**: Use `unknown` or proper types (TypeScript projects)
+3. {{RULE_3}}
+4. {{RULE_4}}
+
+## Project
+
+| Field | Value |
+|-------|-------|
+| Name | {{PROJECT_NAME}} |
+| Description | {{PROJECT_DESCRIPTION}} |
+| Stack | {{TECH_STACK}} |
+| Node version | {{NODE_VERSION}} |
+
+## Common Pitfalls
+
+| Issue | Solution |
+|-------|----------|
+| {{PITFALL_1_ISSUE}} | {{PITFALL_1_SOLUTION}} |
+| {{PITFALL_2_ISSUE}} | {{PITFALL_2_SOLUTION}} |
+| Module not found | Check import path, run `npm install` |
+| TypeError: undefined | Use `?.` (optional chaining) or `??` (nullish) |
+
+## Stack
+
+- Frontend: {{FRONTEND_STACK}}
+- Backend: {{BACKEND_STACK}}
+- Testing: {{TEST_FRAMEWORK}}
+- Quality: {{QUALITY_TOOLS}}
+
+## Workflow
+
+- **New feature**: `/specify` → `/plan` → `/implement` → `/verify` → `/commit-push-pr`
+- **Bug fix**: think hard → plan → fix → test
+- **Review**: `/review` for post-implementation analysis
+
+## Agent Routing
+
+<!-- Customize agent routing based on your project structure -->
+
+| File Pattern | Agent | Priority |
+|---|---|---|
+| All code changes | code-reviewer | default |
+
+<!-- Add stack-specific routing:
+| Next.js files | nextjs-validator | high |
+| Firebase files | firebase-validator | high |
+| API calls | api-guardian | medium |
+| package.json | dependency-auditor | low |
+-->

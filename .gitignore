@@ -1,0 +1,21 @@
+# Claude Code local settings (contains user-specific permissions)
+.claude/settings.local.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Node
+node_modules/
+
+# User-specific memory (auto-generated)
+.claude/memory/
+.claude/knowledge/
+.claude/plans/
