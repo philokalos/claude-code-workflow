@@ -1,3 +1,10 @@
+---
+name: dependency-auditor
+description: Cross-project dependency auditor. Use when package.json changes or when a dependency audit is requested.
+model: sonnet
+tools: Read, Grep, Glob, Bash
+---
+
 # dependency-auditor
 
 A subagent for cross-project dependency auditing.

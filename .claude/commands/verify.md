@@ -1,6 +1,6 @@
 ---
 description: Auto-validate changes with project-type detection and tier-based quality gates.
-allowed-tools: Bash(npm *), Bash(npx *), Bash(pnpm *), Bash(git *), Bash(grep *), Bash(find *), Read
+allowed-tools: Bash(npm:*), Bash(npx:*), Bash(pnpm:*), Bash(git:*), Bash(grep:*), Bash(find:*), Read
 ---
 
 ## User Input

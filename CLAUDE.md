@@ -7,8 +7,8 @@ This is the source repo for a public Claude Code workflow framework.
 A complete `.claude/` directory structure with:
 - 17 slash commands (specify → plan → implement → verify → commit pipeline)
 - 3 skills (learn, promptlint, frontend-design)
-- 12 agents (7 core + 4 team + 1 examples)
-- 5 hooks (workflow-guide, pre-implementation, format-code, verify-on-stop, verify-subagent)
+- 12 agents (6 core + 4 team + 2 examples) — all with YAML frontmatter
+- 5 hooks (workflow-guide registered on SessionStart + UserPromptSubmit; pre-implementation, format-code, verify-on-stop, verify-subagent)
 - 6 rules (3 core + 3 examples)
 
 ## Rules for This Repo

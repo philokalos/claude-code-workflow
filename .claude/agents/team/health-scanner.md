@@ -1,3 +1,10 @@
+---
+name: health-scanner
+description: Read-only project health scanner that collects version info, script presence, git status, and configuration state. Use for cross-project health dashboards via /team health.
+model: haiku
+tools: Read, Grep, Glob, Bash
+---
+
 # health-scanner
 
 A read-only health scanning agent that collects project configuration and status.

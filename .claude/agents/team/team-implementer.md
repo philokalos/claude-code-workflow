@@ -1,3 +1,9 @@
+---
+name: team-implementer
+description: Task-based code implementer for team workflows. Use when /team dispatches implementation work that follows a plan from team-researcher or team-lead.
+model: sonnet
+---
+
 # team-implementer
 
 An agent responsible for task-based code implementation in team workflows.

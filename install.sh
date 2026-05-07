@@ -99,8 +99,8 @@ if [ "$MINIMAL" = true ]; then
     cp "$TEMP_DIR/ccw/.claude/agents/core/code-reviewer.md" "$TARGET_DIR/.claude/agents/core/" 2>/dev/null || true
 
     # Learn skill
-    mkdir -p "$TARGET_DIR/.claude/skills"
-    cp "$TEMP_DIR/ccw/.claude/skills/learn.md" "$TARGET_DIR/.claude/skills/" 2>/dev/null || true
+    mkdir -p "$TARGET_DIR/.claude/skills/learn"
+    cp "$TEMP_DIR/ccw/.claude/skills/learn/SKILL.md" "$TARGET_DIR/.claude/skills/learn/" 2>/dev/null || true
 
     echo ""
     echo -e "${GREEN}Minimal install complete!${NC}"

@@ -15,7 +15,11 @@ Thumbs.db
 # Node
 node_modules/
 
-# User-specific memory (auto-generated)
+# User-specific memory and runtime state (auto-generated)
 .claude/memory/
 .claude/knowledge/
 .claude/plans/
+.claude/pending-rules.md
+
+# Speckit drafts written by workflow-guide background spec generator
+.specify/spec.draft.md

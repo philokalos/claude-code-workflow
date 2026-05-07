@@ -1,6 +1,6 @@
 ---
 description: Create or update feature spec from natural language description.
-allowed-tools: Bash(git *), Bash(.specify/*), Read, Write, Edit
+allowed-tools: Bash(git:*), Bash(.specify/*), Read, Write, Edit
 ---
 <!-- Requires: speckit (https://github.com/speckit/speckit) for full functionality. Works without it in reduced mode. -->
 

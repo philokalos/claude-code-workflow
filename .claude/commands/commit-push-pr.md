@@ -1,6 +1,6 @@
 ---
 description: Git workflow automation — commit, push, PR creation.
-allowed-tools: Bash(git *), Bash(gh pr *)
+allowed-tools: Bash(git:*), Bash(gh:*)
 ---
 
 ## User Input

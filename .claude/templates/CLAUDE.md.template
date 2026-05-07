@@ -63,3 +63,12 @@
 | API calls | api-guardian | medium |
 | package.json | dependency-auditor | low |
 -->
+
+## Model Selection
+
+Agent frontmatter uses aliases (`opus`, `sonnet`, `haiku`) that resolve to the
+latest version in each family. To pin a specific build, replace with a full ID:
+
+- `claude-opus-4-7` — heavy planning, migration, deep review
+- `claude-sonnet-4-6` — default for review/implementation/validation
+- `claude-haiku-4-5-20251001` — fast scans and batch operations

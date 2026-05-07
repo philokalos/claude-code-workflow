@@ -71,15 +71,15 @@ Edit `CLAUDE.md` and replace all `{{PLACEHOLDER}}` values with your project deta
 cp .claude/templates/settings.local.json.template .claude/settings.local.json
 ```
 
-Hooks are configured in `.claude/settings.local.json`. Each hook has a trigger event:
+Hooks are configured in `.claude/settings.local.json`. Each event uses the matcher format (`{ "matcher": "...", "hooks": [...] }`); hook scripts read JSON from stdin.
 
-| Hook | Event | Purpose |
-|------|-------|---------|
-| `workflow-guide.sh` | UserPromptSubmit | Workflow suggestions based on prompt |
-| `pre-implementation.sh` | PreToolUse | Block version conflicts before writes |
-| `format-code.sh` | PostToolUse | Auto-format after file edits |
-| `verify-on-stop.sh` | Stop | Run quality checks when Claude stops |
-| `verify-subagent.sh` | SubagentStop | Validate subagent completion |
+| Hook | Event(s) | Matcher | Purpose |
+|------|----------|---------|---------|
+| `workflow-guide.sh` | SessionStart, UserPromptSubmit | — | Pending-rule notice + workflow suggestions |
+| `pre-implementation.sh` | PreToolUse | `Edit\|Write\|MultiEdit` | Block version conflicts before writes |
+| `format-code.sh` | PostToolUse | `Edit\|Write\|MultiEdit` | Auto-format after file edits |
+| `verify-on-stop.sh` | Stop | — | Run quality checks when Claude stops |
+| `verify-subagent.sh` | SubagentStop | — | Validate subagent completion |
 
 **To disable a hook**: Remove its entry from `settings.local.json`.
 
@@ -95,10 +95,11 @@ Rules in `.claude/rules/` are automatically loaded by Claude Code.
 **Stack-specific rules** (copy from examples if applicable):
 ```bash
 # For TypeScript projects
-cp .claude/rules/examples/typescript-strict-mode.md .claude/rules/typescript/strict-mode.md
+cp .claude/rules/examples/strict-mode.md .claude/rules/typescript/strict-mode.md
 
 # For Firebase projects
-cp .claude/rules/examples/firebase-*.md .claude/rules/firebase/
+cp .claude/rules/examples/firestore-security.md .claude/rules/firebase/
+cp .claude/rules/examples/functions-region.md .claude/rules/firebase/
 ```
 
 ### 4. Choose Agents
@@ -200,6 +201,16 @@ The hook checks for version conflicts before file writes. To add project-specifi
    ```
 
 2. The hook will detect and enforce these constraints.
+
+**Stack-specific validators (Firebase compatibility matrix, React major-version
+pin) are opt-in.** Copy the example into the hooks dir to activate:
+
+```bash
+cp .claude/hooks/examples/pre-implementation-extras.sh .claude/hooks/pre-implementation-extras.sh
+```
+
+The core hook auto-sources `.claude/hooks/pre-implementation-extras.sh` when
+present. Customize the matrix and pinned majors for your stack before enabling.
 
 #### verify-on-stop.sh
 

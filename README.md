@@ -197,9 +197,9 @@ The hooks auto-detect your project type. No configuration needed:
 │   ├── team/          # 4 team collaboration agents
 │   └── examples/      # Stack-specific examples
 ├── hooks/             # 5 automation hooks
-│   ├── workflow-guide.sh       # Smart workflow suggestions (UserPromptSubmit)
-│   ├── pre-implementation.sh   # Version conflict prevention (PreToolUse)
-│   ├── format-code.sh          # Auto-format on edit (PostToolUse)
+│   ├── workflow-guide.sh       # Smart workflow suggestions (SessionStart, UserPromptSubmit)
+│   ├── pre-implementation.sh   # Version conflict prevention (PreToolUse: Edit|Write|MultiEdit)
+│   ├── format-code.sh          # Auto-format on edit (PostToolUse: Edit|Write|MultiEdit)
 │   ├── verify-on-stop.sh       # Quality checks on stop (Stop)
 │   └── verify-subagent.sh      # Subagent validation (SubagentStop)
 ├── rules/
@@ -245,6 +245,18 @@ The hooks auto-detect and support multiple ecosystems:
 | Next.js | ESLint | tsc | Vitest/Jest | 'use client' directive |
 
 To add support for other languages, extend the detection logic in `verify-on-stop.sh`.
+
+## Models
+
+Agent frontmatter uses model aliases (`opus`, `sonnet`, `haiku`) which Claude Code resolves to the latest in each family. Pin a specific version when reproducibility matters:
+
+| Alias | Current ID (as of release) | Use for |
+|---|---|---|
+| `opus` | `claude-opus-4-7` | Migration planning, deep architecture review |
+| `sonnet` | `claude-sonnet-4-6` | Default — code review, implementation, validation |
+| `haiku` | `claude-haiku-4-5-20251001` | High-throughput scans, batch health checks |
+
+To override per-agent, set `model: claude-sonnet-4-6` (or any full ID) in the agent's frontmatter.
 
 ## Dependencies
 

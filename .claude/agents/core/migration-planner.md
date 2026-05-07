@@ -1,3 +1,10 @@
+---
+name: migration-planner
+description: Framework or library migration planner. Use when planning a major version upgrade or framework swap.
+model: opus
+tools: Read, Grep, Glob, Bash
+---
+
 # migration-planner
 
 A subagent for framework/library migration planning.

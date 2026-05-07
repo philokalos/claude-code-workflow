@@ -136,8 +136,9 @@ cat .claude/pending-rules.md
 
 | Hook | Trigger | Purpose |
 | ---- | ------- | ------- |
-| `pre-implementation.sh` | PreToolUse (Edit/Write) | Version conflict prevention |
-| `format-code.sh` | PostToolUse (Edit/Write) | **Auto-formatting** (prevent CI errors) |
+| `workflow-guide.sh` | SessionStart, UserPromptSubmit | Pending-rule notice + workflow suggestions |
+| `pre-implementation.sh` | PreToolUse (matcher: `Edit\|Write\|MultiEdit`) | Version conflict prevention |
+| `format-code.sh` | PostToolUse (matcher: `Edit\|Write\|MultiEdit`) | **Auto-formatting** (prevent CI errors) |
 | `verify-on-stop.sh` | Stop | **Comprehensive verification**: TSC + ESLint + Tests + Security + Error logging + Rule suggestions |
 | `verify-subagent.sh` | SubagentStop | Subagent completion validation |
 
@@ -245,9 +246,11 @@ Details: `.claude/docs/team-workflows.md`
 │   ├── core/           # Universal rules
 │   └── examples/       # Stack-specific example rules
 ├── skills/
-│   └── learn.md        # /learn skill
+│   ├── learn/SKILL.md         # /learn skill
+│   ├── promptlint/SKILL.md    # prompt quality evaluation
+│   └── frontend-design/SKILL.md
 ├── hooks/
-│   ├── workflow-guide.sh      # UserPromptSubmit
+│   ├── workflow-guide.sh      # SessionStart, UserPromptSubmit
 │   ├── pre-implementation.sh  # PreToolUse: version conflict prevention
 │   ├── format-code.sh         # PostToolUse: auto-formatting
 │   ├── verify-on-stop.sh      # Stop: comprehensive verification

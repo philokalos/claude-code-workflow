@@ -1,19 +1,18 @@
 #!/bin/bash
-# Workflow Guide Hook - UserPromptSubmit
+# Workflow Guide Hook - SessionStart and UserPromptSubmit
 # Token minimization: only emit short recommendation messages when needed
 
 set -euo pipefail
 
 # Read JSON input
 INPUT=$(cat)
+EVENT=$(echo "$INPUT" | jq -r '.hook_event_name // ""' 2>/dev/null || echo "")
 PROMPT=$(echo "$INPUT" | jq -r '.prompt // ""' 2>/dev/null || echo "")
 
-# Skip empty prompts
-if [ -z "$PROMPT" ]; then
-    exit 0
-fi
+# Default event name for output payloads
+OUTPUT_EVENT="${EVENT:-UserPromptSubmit}"
 
-# Pending rules notification (Compounding Loop integration)
+# Pending rules notification (Compounding Loop integration) — runs on every event
 MONOREPO_ROOT="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 PENDING_FILE="$MONOREPO_ROOT/.claude/pending-rules.md"
 if [ -f "$PENDING_FILE" ]; then
@@ -23,12 +22,22 @@ if [ -f "$PENDING_FILE" ]; then
 {
     "continue": true,
     "hookSpecificOutput": {
-        "hookEventName": "UserPromptSubmit",
+        "hookEventName": "$OUTPUT_EVENT",
         "additionalContext": "📋 ${PENDING_COUNT} rule candidate(s) pending review in pending-rules.md. Check: cat .claude/pending-rules.md"
     }
 }
 PENDINGEOF
     fi
+fi
+
+# SessionStart only emits the pending-rules notification above; skip prompt analysis
+if [ "$EVENT" = "SessionStart" ]; then
+    exit 0
+fi
+
+# Skip when no prompt text is available (e.g., non-prompt events)
+if [ -z "$PROMPT" ]; then
+    exit 0
 fi
 
 PROMPT_LOWER=$(echo "$PROMPT" | tr '[:upper:]' '[:lower:]')
@@ -124,7 +133,7 @@ if [ -n "$ADDITIONAL_CONTEXT" ]; then
 {
     "continue": true,
     "hookSpecificOutput": {
-        "hookEventName": "UserPromptSubmit",
+        "hookEventName": "$OUTPUT_EVENT",
         "additionalContext": "$ADDITIONAL_CONTEXT"
     }
 }

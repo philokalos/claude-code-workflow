@@ -1,3 +1,10 @@
+---
+name: api-guardian
+description: External API integration security and cost validator. Use when fetch/axios/httpsCallable patterns appear in changes or when a security review is requested.
+model: sonnet
+tools: Read, Grep, Glob, Bash
+---
+
 # api-guardian
 
 A subagent for external API integration security and cost validation.

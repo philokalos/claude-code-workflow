@@ -1,61 +1,87 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git status*)",
-      "Bash(git diff*)",
-      "Bash(git log*)",
-      "Bash(git add*)",
-      "Bash(git commit*)",
-      "Bash(git push*)",
-      "Bash(git checkout*)",
-      "Bash(git branch*)",
-      "Bash(npm run*)",
-      "Bash(npm test*)",
-      "Bash(npx *)",
-      "Bash(ls *)",
-      "Bash(cat *)",
-      "Bash(head *)",
-      "Bash(wc *)",
-      "Bash(find *)",
-      "Bash(grep *)",
-      "Bash(mkdir *)"
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pnpm:*)",
+      "Bash(yarn:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(mkdir:*)",
+      "Bash(wc:*)"
     ],
     "deny": []
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/workflow-guide.sh",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
-        "type": "command",
-        "command": ".claude/hooks/workflow-guide.sh \"$PROMPT\"",
-        "timeout": 10000
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/workflow-guide.sh",
+            "timeout": 10000
+          }
+        ]
       }
     ],
     "PreToolUse": [
       {
-        "type": "command",
-        "command": ".claude/hooks/pre-implementation.sh \"$TOOL_NAME\" \"$TOOL_INPUT\"",
-        "timeout": 10000
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-implementation.sh",
+            "timeout": 10000
+          }
+        ]
       }
     ],
     "PostToolUse": [
       {
-        "type": "command",
-        "command": ".claude/hooks/format-code.sh \"$TOOL_NAME\" \"$TOOL_INPUT\"",
-        "timeout": 15000
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/format-code.sh",
+            "timeout": 15000
+          }
+        ]
       }
     ],
     "Stop": [
       {
-        "type": "command",
-        "command": ".claude/hooks/verify-on-stop.sh",
-        "timeout": 30000
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/verify-on-stop.sh",
+            "timeout": 30000
+          }
+        ]
       }
     ],
     "SubagentStop": [
       {
-        "type": "command",
-        "command": ".claude/hooks/verify-subagent.sh \"$SUBAGENT_TYPE\" \"$SUBAGENT_OUTPUT\"",
-        "timeout": 15000
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/verify-subagent.sh",
+            "timeout": 15000
+          }
+        ]
       }
     ]
   }

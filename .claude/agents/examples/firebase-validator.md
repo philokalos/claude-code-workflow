@@ -1,3 +1,10 @@
+---
+name: firebase-validator
+description: Firebase-specific validator (Firestore rules, region, auth patterns). Stack-specific example — copy and customize for projects using Firebase.
+model: sonnet
+tools: Read, Grep, Glob, Bash
+---
+
 # firebase-validator
 
 A Firebase-specific validation subagent.

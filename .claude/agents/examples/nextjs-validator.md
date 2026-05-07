@@ -1,3 +1,10 @@
+---
+name: nextjs-validator
+description: Next.js-specific validator (server/client component patterns, app-router conventions). Stack-specific example — copy and customize for projects using Next.js.
+model: sonnet
+tools: Read, Grep, Glob, Bash
+---
+
 # nextjs-validator
 
 A Next.js-specific validation subagent.
