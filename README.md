@@ -246,6 +246,18 @@ The hooks auto-detect and support multiple ecosystems:
 
 To add support for other languages, extend the detection logic in `verify-on-stop.sh`.
 
+## Models
+
+Agent frontmatter uses model aliases (`opus`, `sonnet`, `haiku`) which Claude Code resolves to the latest in each family. Pin a specific version when reproducibility matters:
+
+| Alias | Current ID (as of release) | Use for |
+|---|---|---|
+| `opus` | `claude-opus-4-7` | Migration planning, deep architecture review |
+| `sonnet` | `claude-sonnet-4-6` | Default — code review, implementation, validation |
+| `haiku` | `claude-haiku-4-5-20251001` | High-throughput scans, batch health checks |
+
+To override per-agent, set `model: claude-sonnet-4-6` (or any full ID) in the agent's frontmatter.
+
 ## Dependencies
 
 ### Required

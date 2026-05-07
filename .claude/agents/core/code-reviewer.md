@@ -1,3 +1,10 @@
+---
+name: code-reviewer
+description: Read-only code quality and security reviewer. Use proactively after implementation is complete or when a code review is requested.
+model: sonnet
+tools: Read, Grep, Glob, Bash
+---
+
 # code-reviewer
 
 A read-only subagent that performs code quality and security reviews after implementation.

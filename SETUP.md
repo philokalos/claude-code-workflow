@@ -71,15 +71,15 @@ Edit `CLAUDE.md` and replace all `{{PLACEHOLDER}}` values with your project deta
 cp .claude/templates/settings.local.json.template .claude/settings.local.json
 ```
 
-Hooks are configured in `.claude/settings.local.json`. Each hook has a trigger event:
+Hooks are configured in `.claude/settings.local.json`. Each event uses the matcher format (`{ "matcher": "...", "hooks": [...] }`); hook scripts read JSON from stdin.
 
-| Hook | Event | Purpose |
-|------|-------|---------|
-| `workflow-guide.sh` | UserPromptSubmit | Workflow suggestions based on prompt |
-| `pre-implementation.sh` | PreToolUse | Block version conflicts before writes |
-| `format-code.sh` | PostToolUse | Auto-format after file edits |
-| `verify-on-stop.sh` | Stop | Run quality checks when Claude stops |
-| `verify-subagent.sh` | SubagentStop | Validate subagent completion |
+| Hook | Event(s) | Matcher | Purpose |
+|------|----------|---------|---------|
+| `workflow-guide.sh` | SessionStart, UserPromptSubmit | — | Pending-rule notice + workflow suggestions |
+| `pre-implementation.sh` | PreToolUse | `Edit\|Write\|MultiEdit` | Block version conflicts before writes |
+| `format-code.sh` | PostToolUse | `Edit\|Write\|MultiEdit` | Auto-format after file edits |
+| `verify-on-stop.sh` | Stop | — | Run quality checks when Claude stops |
+| `verify-subagent.sh` | SubagentStop | — | Validate subagent completion |
 
 **To disable a hook**: Remove its entry from `settings.local.json`.
 

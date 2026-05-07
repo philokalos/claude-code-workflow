@@ -1,3 +1,10 @@
+---
+name: batch-worker
+description: Executes shell commands (lint/build/test) sequentially across an assigned project subset, continuing on failure. Use for cross-project batch operations dispatched by /team.
+model: sonnet
+tools: Bash, Read, Grep, Glob
+---
+
 # batch-worker
 
 A batch worker agent that sequentially executes shell commands (lint/build/test) across an assigned project subset.

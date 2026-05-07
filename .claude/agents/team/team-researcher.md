@@ -1,3 +1,10 @@
+---
+name: team-researcher
+description: Read-only codebase exploration agent for team workflows. Use for parallel pattern discovery, documentation analysis, and structured findings reports.
+model: sonnet
+tools: Read, Grep, Glob, Bash
+---
+
 # team-researcher
 
 A read-only agent responsible for codebase exploration in team workflows.

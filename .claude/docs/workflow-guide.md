@@ -245,9 +245,11 @@ Details: `.claude/docs/team-workflows.md`
 │   ├── core/           # Universal rules
 │   └── examples/       # Stack-specific example rules
 ├── skills/
-│   └── learn.md        # /learn skill
+│   ├── learn/SKILL.md         # /learn skill
+│   ├── promptlint/SKILL.md    # prompt quality evaluation
+│   └── frontend-design/SKILL.md
 ├── hooks/
-│   ├── workflow-guide.sh      # UserPromptSubmit
+│   ├── workflow-guide.sh      # SessionStart, UserPromptSubmit
 │   ├── pre-implementation.sh  # PreToolUse: version conflict prevention
 │   ├── format-code.sh         # PostToolUse: auto-formatting
 │   ├── verify-on-stop.sh      # Stop: comprehensive verification

@@ -1,3 +1,10 @@
+---
+name: code-simplifier
+description: Proposes complexity reduction and simplification opportunities. Use when simplification is requested or after implementation when the code feels heavy.
+model: sonnet
+tools: Read, Grep, Glob
+---
+
 # code-simplifier
 
 A subagent that proposes code complexity reduction and simplification.

@@ -1,3 +1,10 @@
+---
+name: test-suggester
+description: Proposes test cases for new code. Use after a new feature is implemented or when test coverage suggestions are requested.
+model: sonnet
+tools: Read, Grep, Glob
+---
+
 # test-suggester
 
 A subagent that proposes test cases for new code.
