@@ -91,114 +91,9 @@ get_dep_version() {
     echo "$content" | jq -r ".dependencies[\"$dep_name\"] // .devDependencies[\"$dep_name\"] // .peerDependencies[\"$dep_name\"] // \"\""
 }
 
-# Firebase Compatibility Matrix
-validate_firebase_compatibility() {
-    local firebase_version=$(get_dep_version "firebase" "$NEW_CONTENT")
-    local functions_version=$(get_dep_version "firebase-functions" "$NEW_CONTENT")
-    local admin_version=$(get_dep_version "firebase-admin" "$NEW_CONTENT")
-
-    # Skip if no Firebase dependencies
-    if [ -z "$firebase_version" ] && [ -z "$functions_version" ] && [ -z "$admin_version" ]; then
-        return 0
-    fi
-
-    # Extract major version numbers (remove ^ and ~ prefixes)
-    firebase_major=$(echo "$firebase_version" | sed 's/[\^~]//g' | cut -d. -f1)
-    functions_major=$(echo "$functions_version" | sed 's/[\^~]//g' | cut -d. -f1)
-    admin_major=$(echo "$admin_version" | sed 's/[\^~]//g' | cut -d. -f1)
-
-    local has_error=false
-    local error_msg=""
-
-    # Firebase 10.x requires functions 4.x-5.x and admin 12.x
-    if [ "$firebase_major" = "10" ]; then
-        if [ -n "$functions_major" ] && [ "$functions_major" != "4" ] && [ "$functions_major" != "5" ]; then
-            has_error=true
-            error_msg="Firebase 10.x requires firebase-functions 4.x or 5.x (not $functions_major.x)"
-        fi
-        if [ -n "$admin_major" ] && [ "$admin_major" != "12" ]; then
-            has_error=true
-            error_msg="${error_msg}\nFirebase 10.x requires firebase-admin 12.x (not $admin_major.x)"
-        fi
-    fi
-
-    # Firebase 11.x requires functions 5.x-6.x and admin 12.x-13.x
-    if [ "$firebase_major" = "11" ]; then
-        if [ -n "$functions_major" ] && [ "$functions_major" != "5" ] && [ "$functions_major" != "6" ]; then
-            has_error=true
-            error_msg="Firebase 11.x requires firebase-functions 5.x or 6.x (not $functions_major.x)"
-        fi
-        if [ -n "$admin_major" ] && [ "$admin_major" != "12" ] && [ "$admin_major" != "13" ]; then
-            has_error=true
-            error_msg="${error_msg}\nFirebase 11.x requires firebase-admin 12.x or 13.x (not $admin_major.x)"
-        fi
-    fi
-
-    # Firebase 12.x requires functions 6.x and admin 13.x
-    if [ "$firebase_major" = "12" ]; then
-        if [ -n "$functions_major" ] && [ "$functions_major" != "6" ]; then
-            has_error=true
-            error_msg="Firebase 12.x requires firebase-functions 6.x (not $functions_major.x)"
-        fi
-        if [ -n "$admin_major" ] && [ "$admin_major" != "13" ]; then
-            has_error=true
-            error_msg="${error_msg}\nFirebase 12.x requires firebase-admin 13.x (not $admin_major.x)"
-        fi
-    fi
-
-    # Functions/admin pairing
-    if [ -n "$functions_major" ] && [ -n "$admin_major" ]; then
-        if { [ "$functions_major" = "4" ] || [ "$functions_major" = "5" ]; } && [ "$admin_major" != "12" ]; then
-            has_error=true
-            error_msg="${error_msg}\nfirebase-functions $functions_major.x should pair with firebase-admin 12.x (not $admin_major.x)"
-        fi
-        if [ "$functions_major" = "6" ] && [ "$admin_major" != "13" ]; then
-            has_error=true
-            error_msg="${error_msg}\nfirebase-functions 6.x should pair with firebase-admin 13.x (not $admin_major.x)"
-        fi
-    fi
-
-    if [ "$has_error" = true ]; then
-        cat <<EOF
-{
-  "continue": false,
-  "systemMessage": "Firebase Version Conflict Detected\n\n$error_msg\n\nCurrent versions in package.json:\n  firebase: $firebase_version\n  firebase-functions: $functions_version\n  firebase-admin: $admin_version\n\nRecommendation: Check Firebase compatibility matrix"
-}
-EOF
-        exit 0
-    fi
-
-    return 0
-}
-
-# React Major Version Upgrade Protection
-validate_react_constraints() {
-    local react_version=$(get_dep_version "react" "$NEW_CONTENT")
-
-    if [ -z "$react_version" ]; then
-        return 0
-    fi
-
-    local react_major=$(echo "$react_version" | sed 's/[\^~]//g' | cut -d. -f1)
-
-    # Block React major version upgrades (18→19) without explicit approval
-    if [ -f "$FILE_PATH" ]; then
-        local current_react=$(jq -r '.dependencies.react // ""' "$FILE_PATH")
-        local current_major=$(echo "$current_react" | sed 's/[\^~]//g' | cut -d. -f1)
-
-        if [ "$current_major" = "18" ] && [ "$react_major" = "19" ]; then
-            cat <<EOF
-{
-  "continue": false,
-  "systemMessage": "React 18 to 19 Upgrade Blocked\n\nProject: $PROJECT_NAME\nCurrent: React $current_react\nAttempted: React $react_version\n\nReason: Major version upgrade requires careful testing\n- Check peer dependencies compatibility\n- Update React DOM and other React packages together\n- Verify no breaking changes affect your code\n\nRecommendation: Review React 19 migration guide first"
-}
-EOF
-            exit 0
-        fi
-    fi
-
-    return 0
-}
+# Firebase compatibility matrix and React major-version pin live in
+# .claude/hooks/examples/pre-implementation-extras.sh — copy into your
+# project and source it from below to enable.
 
 # Lock File Consistency Check
 check_lock_file_consistency() {
@@ -287,13 +182,19 @@ EOF
     return 0
 }
 
-# Run all validations
-validate_firebase_compatibility
-validate_react_constraints
+# Run stack-agnostic validations
 check_lock_file_consistency
 validate_node_engine
 validate_typescript_version
 check_duplicate_dependencies
+
+# Source stack-specific extras when the user has opted in by copying
+# .claude/hooks/examples/pre-implementation-extras.sh into the hooks dir.
+EXTRAS_FILE="$(dirname "$0")/pre-implementation-extras.sh"
+if [ -f "$EXTRAS_FILE" ]; then
+    # shellcheck source=/dev/null
+    . "$EXTRAS_FILE"
+fi
 
 # All checks passed - silent success
 exit 0

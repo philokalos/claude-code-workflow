@@ -202,6 +202,16 @@ The hook checks for version conflicts before file writes. To add project-specifi
 
 2. The hook will detect and enforce these constraints.
 
+**Stack-specific validators (Firebase compatibility matrix, React major-version
+pin) are opt-in.** Copy the example into the hooks dir to activate:
+
+```bash
+cp .claude/hooks/examples/pre-implementation-extras.sh .claude/hooks/pre-implementation-extras.sh
+```
+
+The core hook auto-sources `.claude/hooks/pre-implementation-extras.sh` when
+present. Customize the matrix and pinned majors for your stack before enabling.
+
 #### verify-on-stop.sh
 
 The stop hook runs quality checks. It auto-detects:
