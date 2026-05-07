@@ -95,10 +95,11 @@ Rules in `.claude/rules/` are automatically loaded by Claude Code.
 **Stack-specific rules** (copy from examples if applicable):
 ```bash
 # For TypeScript projects
-cp .claude/rules/examples/typescript-strict-mode.md .claude/rules/typescript/strict-mode.md
+cp .claude/rules/examples/strict-mode.md .claude/rules/typescript/strict-mode.md
 
 # For Firebase projects
-cp .claude/rules/examples/firebase-*.md .claude/rules/firebase/
+cp .claude/rules/examples/firestore-security.md .claude/rules/firebase/
+cp .claude/rules/examples/functions-region.md .claude/rules/firebase/
 ```
 
 ### 4. Choose Agents
