@@ -197,9 +197,9 @@ The hooks auto-detect your project type. No configuration needed:
 │   ├── team/          # 4 team collaboration agents
 │   └── examples/      # Stack-specific examples
 ├── hooks/             # 5 automation hooks
-│   ├── workflow-guide.sh       # Smart workflow suggestions (UserPromptSubmit)
-│   ├── pre-implementation.sh   # Version conflict prevention (PreToolUse)
-│   ├── format-code.sh          # Auto-format on edit (PostToolUse)
+│   ├── workflow-guide.sh       # Smart workflow suggestions (SessionStart, UserPromptSubmit)
+│   ├── pre-implementation.sh   # Version conflict prevention (PreToolUse: Edit|Write|MultiEdit)
+│   ├── format-code.sh          # Auto-format on edit (PostToolUse: Edit|Write|MultiEdit)
 │   ├── verify-on-stop.sh       # Quality checks on stop (Stop)
 │   └── verify-subagent.sh      # Subagent validation (SubagentStop)
 ├── rules/
